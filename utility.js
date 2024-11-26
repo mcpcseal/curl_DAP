@@ -6,11 +6,8 @@ function index2D(x, y, width) {
 function drawLine(x, y, length, rot) {
   const halfLength = length / 2
   push();
-  // resetMatrix();
   translate(x + length, y + length);
   rotate(rot);
-  // rotate(-rot);
-  line(-length, 0, length, 0);
-  // translate(-width/2, -height/2);  
+  line(-length, 0, length, 0);  
   pop();
 }
