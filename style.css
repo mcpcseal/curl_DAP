@@ -1,0 +1,13 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    text-align: center;
+    background: white;
+  }
+
+canvas {
+    outline: solid;
+    display: block;
+    margin: auto; /* centers the canvas */
+}
