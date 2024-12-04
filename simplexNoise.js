@@ -192,7 +192,7 @@ function openSimplexNoise(clientSeed) {
 			})();
 			var i, value = 0;
 			while (c !== undefined) {
-				const dx = dx0 + c.dx, dy = dy0 + c.dy, dz = dz0 + c.dz;
+				const dx = dx0 + c.dx, dy = dy0 + c.dy, dz = dz0 + c.dz;	
 				let attn = 2 - dx * dx - dy * dy - dz * dz;
 				if (attn > 0) {
 					i = pD[(((p[(xsb + c.xsb) & 0xFF] + (ysb + c.ysb)) & 0xFF) + (zsb + c.zsb)) & 0xFF];

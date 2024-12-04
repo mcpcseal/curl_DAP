@@ -1,9 +1,11 @@
 let frameCount = 0;
 const seed = Date.now();
 const division = 40;
+const zoom = 150;
+
 
 function setup() {
-  createCanvas(800, 400);
+  createCanvas(800, 450);
 }
 
 function draw() {
@@ -11,36 +13,32 @@ function draw() {
 
   // generate simplex noise
   const openSimplex = openSimplexNoise(seed);
-  const zoom = 100;
+  const step = width / division;
 
-  let noise_array = [];
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      value = (openSimplex.noise3D(x / zoom, y / zoom, frameCount / 50) + 1) * 128;
-      const step = width / division;
-      if ((x % step == 0) && (y % step == 0)) {
-        fill(value);
-        stroke(value);
-        rect(x, y, step, step);
-      }
-      
-      noise_array.push(value);
-    }
-  }
-  
-  for (let i=0; i<  division; i++){
+  for (let i=0; i<division; i++){
     for(let j=0; j<division; j++){
-      let step = width / division;
-      let x = i * step;
-      let y = j * step;
-      let index = index2D(x, y, width);
-      let value = noise_array[index];
+      const pixel_x = i * step;
+      const pixel_y = j * step;
+      const noise_x = pixel_x / zoom;
+      const noise_y = pixel_y / zoom;
+      const noise_z = frameCount / 100;
+
+      // range is -1 to 1
+      const noise_value = openSimplex.noise3D(noise_x, noise_y, noise_z);
+      greyscale_value = (noise_value + 1) * 128;
       
-      
-      let curlVector = curl(x + 1, y + 1, noise_array, width);
-      let h = curlVector.heading();
+      // draw rectangle with noise value
+      fill(greyscale_value);
+      stroke(greyscale_value);
+      rect(pixel_x, pixel_y, step, step);
+
+      // compute curl
+      const curlVector = curl(noise_x, noise_y, noise_z, openSimplex.noise3D);
+      const h = curlVector.heading();
+
+      // draw line of curl
       stroke(255);
-      drawLine(x, y, step/2, h);
+      drawLine(pixel_x, pixel_y, step/2, h); // curl
     }
   }
 
