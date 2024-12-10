@@ -14,7 +14,7 @@ class FlowField {
   }
 
   setNoiseSpeed(speed) {
-    this.noise_z_mult = speed * 0.0001;
+    this.noise_z_mult = speed * 0.01;
   }
 
   setDivision(division) {

@@ -3,7 +3,7 @@ let zoomValueHTML = document.getElementById("zoomValue");
 let divisionNum = document.getElementById("divisionNum");
 
 let zoom = 100;
-let division = 40;
+let division = 30;
 
 let canvas;
 
@@ -29,7 +29,7 @@ function draw() {
 
   flowField.setZoom(zoom);
   flowField.setDivision(division);
-  flowField.setNoiseSpeed(0.3);
+  flowField.setNoiseSpeed(0.2);
   
   system.update();
   system.applyField(flowField);

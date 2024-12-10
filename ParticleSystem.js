@@ -17,7 +17,7 @@ class ParticleSystem {
     for (let p of this.particles) {
       let force = flowField.lookupCurl(p.pos.x, p.pos.y);
       if (force != undefined){
-        force = force.copy().mult(0.05);
+        force = force.copy().mult(0.07);
         p.applyForce(force);
       }
     }
@@ -67,6 +67,12 @@ class Particle {
   }
 
   draw() {
+    let pole = createVector(1, 0);
+    let angle = this.vel.angleBetween(pole);
+    let b = angle / TWO_PI * 128 + 128;
+
+    noStroke();
+    fill(b);
     circle(this.pos.x, this.pos.y, 10);
   }
 }
