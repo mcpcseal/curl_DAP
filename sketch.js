@@ -29,14 +29,10 @@ function draw() {
 
   flowField.setZoom(zoom);
   flowField.setDivision(division);
+  flowField.setNoiseSpeed(0.3);
   
   system.update();
   system.applyField(flowField);
-  
-   // if (frameCount % 60 < 2){
-  //   flowField.setDivision(floor(random(20, 25)));
-  // }
-  flowField.setNoiseSpeed(0.5);
   // flowField.drawRect(frameCount);
   flowField.drawLine(frameCount);
 }

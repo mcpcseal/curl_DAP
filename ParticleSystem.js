@@ -45,6 +45,7 @@ class Particle {
   update() {
     this.pos.add(this.vel);
     this.vel.add(this.accel);
+    this.vel.mult(0.99);
     this.vel.limit(5);
     this.accel.mult(0);
     this.computeBorder();
