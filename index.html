@@ -9,14 +9,26 @@
   </head>
   <body>
     <h1>Curl Noise</h1>
-    <div id="container">
-      <!--sketch will be inserted here, as done in setup() in sketch.js-->
-    </div>
+    
     <p>curl noise experiment</p>
-    <script src="utility.js"></script>
-    <script src="simplexNoise.js"></script>
-    <script src="curl.js"></script>
-    <script src="FlowField.js"></script>
-    <script src="sketch.js"></script>
+    <div id="canvasContainer"></div>
+    
+      <div id="sliderContainer">
+        Zoom:
+        <input type="range" min="50" max="500" value="100" id="zoomSlider">
+        <div id="zoomValue" style="display:inline;">100</div>
+        <br>
+        Division:
+        <input type="number" min="2" max="70" value="40" id="divisionNum">
+      </div>
+
+      <script src="utility.js"></script>
+      <script src="simplexNoise.js"></script>
+      <script src="curl.js"></script>
+      <script src="FlowField.js"></script>
+      <script src="ParticleSystem.js"></script>
+      <script src="sketch.js"></script> 
+    </div>
+    
   </body>
 </html>

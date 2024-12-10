@@ -3,11 +3,13 @@ function index2D(x, y, width) {
   return index;
 }
 
-function drawLine(x, y, length, rot) {
+function drawArrow(x, y, length, rot) {
   const halfLength = length / 2
   push();
   translate(x + length, y + length);
   rotate(rot);
-  line(-length, 0, length, 0);  
+  line(-length, 0, length, 0);
+  line(length / 2, 5, length, 0);
+  line(length / 2, -5, length, 0);
   pop();
 }

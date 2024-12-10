@@ -2,6 +2,7 @@ class FlowField {
   constructor(division) {
     let seed = 0;
     this.openSimplex = openSimplexNoise(seed);
+    this.zoom = 200;
     
     this.division = division;
     this.step = width / division;
@@ -21,10 +22,24 @@ class FlowField {
     this.step = width / division;
     this.renderCurl();
   }
+  
+  setZoom(zoom) {
+    this.zoom = zoom;
+  }
 
-  lookup(x, y, array, division) {
-    let i = x + y * division;
-    return array[i]
+  lookupCurl(x, y) {
+    let width_zone_size = width / this.division;
+    let height_zone_size = height / this.division;
+    
+    let i = floor(x / width_zone_size);
+    let j = floor(y / height_zone_size);
+    let curl = this.lookupArray(i, j, this.curlArray, this.division);
+    return curl;
+  }
+
+  lookupArray(i, j, array, division) {
+    let index = i + j * division;
+    return array[index];
   }
   
   renderCurl() {
@@ -34,8 +49,8 @@ class FlowField {
       for(let j=0; j<this.division; j++){
         let pixel_x = i * this.step;
         let pixel_y = j * this.step;
-        let noise_x = pixel_x / zoom;
-        let noise_y = pixel_y / zoom;
+        let noise_x = pixel_x / this.zoom;
+        let noise_y = pixel_y / this.zoom;
         let noise_z = frameCount * this.noise_z_mult;
   
         // compute noise, range is -1 to 1
@@ -51,7 +66,7 @@ class FlowField {
   
   drawRect(frameCount) {
     if (frameCount == this.frameCount){
-      return
+      return;
     }
     this.renderCurl();
     for (let i=0; i<this.division; i++){
@@ -60,7 +75,7 @@ class FlowField {
         let pixel_y = j * this.step;
 
         // lookup simplex noise and convert range from (-1, 1) to (0, 256)
-        let noise_value = this.lookup(i, j, this.simplexArray, this.division);;
+        let noise_value = this.lookupArray(i, j, this.simplexArray, this.division);;
         let greyscale_value = (noise_value + 1) * 128;
         
         // draw rectangle with simplex value
@@ -71,15 +86,15 @@ class FlowField {
     }
   }
 
-  drawLine(frameCount){
+  drawLine(frameCount) {
     if (frameCount == this.frameCount){
-      return
+      return;
     }
     this.renderCurl();
     for (let i=0; i<this.division; i++){
       for(let j=0; j<this.division; j++){
         // lookup curl
-        let curlVector = this.lookup(i, j, this.curlArray, this.division);
+        let curlVector = this.lookupArray(i, j, this.curlArray, this.division);
         
         // compute pixel value
         let pixel_x = i * this.step;
@@ -88,7 +103,7 @@ class FlowField {
         // draw line of curl
         let h = curlVector.heading();
         stroke(255);
-        drawLine(pixel_x, pixel_y, this.step/2, h); // curl vector line
+        drawArrow(pixel_x, pixel_y, this.step/2, h); // curl vector line
       }
     }
   }
