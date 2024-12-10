@@ -102,7 +102,7 @@ class FlowField {
 
         // draw line of curl
         let h = curlVector.heading();
-        stroke(255);
+        stroke(128);
         drawArrow(pixel_x, pixel_y, this.step/2, h); // curl vector line
       }
     }

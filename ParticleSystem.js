@@ -69,10 +69,15 @@ class Particle {
   draw() {
     let pole = createVector(1, 0);
     let angle = this.vel.angleBetween(pole);
-    let b = angle / TWO_PI * 128 + 128;
+    let b = map(angle, 0, TWO_PI, 0, 255);
 
-    noStroke();
+    if (b > 100) {
+      b = 255;
+    }
+
+    // noStroke();
+    stroke(255);
     fill(b);
-    circle(this.pos.x, this.pos.y, 10);
+    circle(this.pos.x, this.pos.y, 20);
   }
 }

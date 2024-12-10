@@ -1,6 +1,7 @@
-let zoomSlider = document.getElementById("zoomSlider");
-let zoomValueHTML = document.getElementById("zoomValue");
-let divisionNum = document.getElementById("divisionNum");
+// // gui setup
+// let zoomSlider = document.getElementById("zoomSlider");
+// let zoomValueHTML = document.getElementById("zoomValue");
+// let divisionNum = document.getElementById("divisionNum");
 
 let zoom = 100;
 let division = 30;
@@ -37,12 +38,12 @@ function draw() {
   flowField.drawLine(frameCount);
 }
 
-zoomSlider.oninput = function() {
-  zoom = zoomSlider.value;
-  zoomValueHTML.innerHTML = zoom;
-  // console.log(zoom);
-}
+// zoomSlider.oninput = function() {
+//   zoom = zoomSlider.value;
+//   zoomValueHTML.innerHTML = zoom;
+//   // console.log(zoom);
+// }
 
-divisionNum.oninput = function() {
-  division = int(divisionNum.value);
-}
+// divisionNum.oninput = function() {
+//   division = int(divisionNum.value);
+// }
