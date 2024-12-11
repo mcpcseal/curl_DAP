@@ -1,4 +1,5 @@
 # Floating Memory
+Listen to the sound of floating memories.
 
-github pages:
-https://mcpcseal.github.io/curl_DAP/
+Github Pages:
+https://mcpcseal.github.io/floating_memory_DAP/
