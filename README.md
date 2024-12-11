@@ -1,5 +1,4 @@
-# curl_DAP
-curl noise experiment
+# Floating Memory
 
-github page:
+github pages:
 https://mcpcseal.github.io/curl_DAP/
