@@ -36,6 +36,9 @@ class Particle {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
     this.accel = createVector(0, 0);
+
+    this.monoSynth = new p5.MonoSynth();
+    this.lastPlayed = 0; // in milliseconds
   }
 
   applyForce(force) {
@@ -66,18 +69,55 @@ class Particle {
     }
   }
 
+  playNote() {
+    let t = millis();
+    let interval = 500;
+    if (t - this.lastPlayed > interval) {
+      this.lastPlayed = t;
+
+      this.monoSynth.setADSR(0.01, 0.1);
+      // pentatonic scale
+      // let notes = ['A2', 'C3', 'D3', 'E3', 'G3',
+      //              'A3', 'C4', 'D4', 'E4', 'G4',
+      //              'A4', 'C5', 'D5', 'E5', 'G5',
+      //              'A6', 'C5', 'D6', 'E6', 'G6',
+      //              'A7']; 
+
+      // major scale
+      let notes = ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2',
+                   'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3'];
+      let posIndex = floor(map(this.pos.x, 0, width, 0, notes.length)); 
+      let note = notes[posIndex];
+
+      let logMin = log(100); // log of minimum freq
+      let logMax = log(10000); // log of maximum freq
+      let logValue = map(this.pos.x, 0, width, logMin, logMax);
+      let freq = pow(2.71828, logValue);
+      // print(freq);
+      
+      let velocity = 1;
+      let time = 0;
+      let dur = 0.1;
+      this.monoSynth.amp(0.1);
+      // this.monoSynth.play(note, velocity, time, dur);
+      this.monoSynth.play(freq, velocity, time, dur);
+    }
+  }
+
   draw() {
     let pole = createVector(1, 0);
     let angle = this.vel.angleBetween(pole);
-    let b = map(angle, 0, TWO_PI, 0, 255);
+    let b = map(angle, 0, TWO_PI, 0, 128);
+    let color = 0;
 
-    if (b > 100) {
-      b = 255;
+    if (b > 50) {
+      color = 255;
+      this.playNote();
     }
 
     // noStroke();
     stroke(255);
-    fill(b);
+    fill(color);
     circle(this.pos.x, this.pos.y, 20);
   }
 }

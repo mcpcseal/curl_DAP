@@ -22,6 +22,7 @@ function setup() {
   let count = 20;
   system = new ParticleSystem(count);
   
+  userStartAudio();
 }
 
 function draw() {
