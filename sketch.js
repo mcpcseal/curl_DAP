@@ -13,6 +13,8 @@ const seed = Date.now();
 let flowField;
 let system;
 
+let delay;
+
 function setup() {
   canvas = createCanvas(800, 450);
   canvas.parent("canvasContainer");
@@ -32,11 +34,12 @@ function draw() {
   flowField.setZoom(zoom);
   flowField.setDivision(division);
   flowField.setNoiseSpeed(0.2);
+
+  // flowField.drawRect(frameCount);
+  flowField.drawLine(frameCount);
   
   system.update();
   system.applyField(flowField);
-  // flowField.drawRect(frameCount);
-  flowField.drawLine(frameCount);
 }
 
 // zoomSlider.oninput = function() {

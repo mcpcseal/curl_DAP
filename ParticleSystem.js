@@ -3,6 +3,9 @@ class ParticleSystem {
     this.particleCount = particleCount;
     this.particles = [];
     this.initParticle();
+    
+    this.delay;
+    this.reverb;
   }
 
   initParticle() {
@@ -11,6 +14,7 @@ class ParticleSystem {
       let y = random(0, height);
       this.particles.push(new Particle(x, y));
     }
+    this.processAudio();
   }
 
   applyField(flowField) {
@@ -23,6 +27,17 @@ class ParticleSystem {
     }
   }
 
+  processAudio() {
+    this.delay = new p5.Delay(0.3, 0.7);
+    this.reverb = new p5.Reverb(10);
+    this.reverb.amp(0.5);
+    this.delay.amp(0.5);
+    for (let p of this.particles) { 
+      this.delay.process(p.monoSynth, 0.3, 0.3);
+      this.reverb.process(p.monoSynth, 3, 2);
+    }
+  }
+
   update() {
     for (let p of this.particles) {
       p.update();
@@ -30,6 +45,7 @@ class ParticleSystem {
     }
   }
 }
+
 
 class Particle {
   constructor(x, y) {
@@ -84,8 +100,8 @@ class Particle {
       //              'A7']; 
 
       // major scale
-      let notes = ['C2', 'D2', 'E2', 'F2', 'G2', 'A2', 'B2',
-                   'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3'];
+      let notes = ['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3',
+                   'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
       let posIndex = floor(map(this.pos.x, 0, width, 0, notes.length)); 
       let note = notes[posIndex];
 
@@ -98,7 +114,8 @@ class Particle {
       let velocity = 1;
       let time = 0;
       let dur = 0.1;
-      this.monoSynth.amp(0.1);
+      this.monoSynth.amp(0.3);
+
       // this.monoSynth.play(note, velocity, time, dur);
       this.monoSynth.play(freq, velocity, time, dur);
     }
