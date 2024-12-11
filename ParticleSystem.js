@@ -107,10 +107,14 @@ class Particle {
   draw() {
     let pole = createVector(1, 0);
     let angle = this.vel.angleBetween(pole);
-    let b = map(angle, 0, TWO_PI, 0, 128);
+    let rot = map(angle, 0, TWO_PI, 0, 360);
     let color = 0;
 
-    if (b > 50) {
+    let angle_center = 90;
+    let angle_range = 30;
+    let left_angle = angle_center + angle_range / 2;
+    let right_angle = angle_center - angle_range / 2;
+    if (rot < left_angle && rot > right_angle) {
       color = 255;
       this.playNote();
     }
