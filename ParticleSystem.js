@@ -49,12 +49,17 @@ class ParticleSystem {
 
 class Particle {
   constructor(x, y) {
+    this.initParticle(x, y);
+    this.monoSynth = new p5.MonoSynth();
+    this.lastPlayed = 0; // in milliseconds
+  }
+
+  initParticle(x, y) {
     this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
     this.accel = createVector(0, 0);
-
-    this.monoSynth = new p5.MonoSynth();
-    this.lastPlayed = 0; // in milliseconds
+    this.life = random(0.5, 1);
+    this.lifeDecay = 0.001;
   }
 
   applyForce(force) {
@@ -68,6 +73,13 @@ class Particle {
     this.vel.limit(5);
     this.accel.mult(0);
     this.computeBorder();
+
+    this.life -= this.lifeDecay;
+    if (this.life < 0){
+      let x = random(0, width);
+      let y = random(0, height);
+      this.initParticle(x, y);
+    }
   }
 
   computeBorder() {
